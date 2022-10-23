@@ -5,12 +5,14 @@ const cors = require('cors');
 app.use(cors());
 app.use(express.json());
 app.post('/paste-text',(req,res)=>{
+    // ------------------->> text check is its include url or not <<--------------------
     const URL_REGEX =
 	/^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/gm;
     const text = req.body.text;
     let textarr;
     const words = text.split(' ');
     words.map(word=> {
+        // -------if text is url then replace with <a> tag--------
         if(word.match(URL_REGEX)){
             textarr = text.replace(word,`<a href="${word}"></a>`);
         }
